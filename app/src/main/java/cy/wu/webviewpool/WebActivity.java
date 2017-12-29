@@ -3,8 +3,10 @@ package cy.wu.webviewpool;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 
 public class WebActivity extends AppCompatActivity {
@@ -12,6 +14,8 @@ public class WebActivity extends AppCompatActivity {
     String mUrl;
 
     WebView mWebView;
+
+    WebClientHandle mWebClientHandle = new WebClientHandle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +35,58 @@ public class WebActivity extends AppCompatActivity {
         rootLayout.addView(mWebView, rl);
 
 
-        mWebView.loadUrl(mUrl);
+        mWebClientHandle.addWebClient(new WebViewClient(){
 
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Log.e("wcy", "11111 shouldOverrideUrlLoading");
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                Log.e("wcy", "11111 onPageFinished");
+                super.onPageFinished(view, url);
+            }
+        });
+
+
+
+        mWebClientHandle.addWebClient(new WebViewClient(){
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Log.e("wcy", "222222 shouldOverrideUrlLoading");
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                Log.e("wcy", "22222 onPageFinished");
+                super.onPageFinished(view, url);
+            }
+        });
+
+
+        mWebClientHandle.addWebClient(new WebViewClient(){
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Log.e("wcy", "333333 shouldOverrideUrlLoading");
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                Log.e("wcy", "33333 onPageFinished");
+                super.onPageFinished(view, url);
+            }
+        });
+
+        mWebView.setWebViewClient(mWebClientHandle);
+
+        mWebView.loadUrl(mUrl);
     }
 
 
